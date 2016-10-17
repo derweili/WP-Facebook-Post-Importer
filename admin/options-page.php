@@ -114,7 +114,7 @@ class WPFPI_Options {
 
     private function login_with_facebook_link (){
 
-        if ( !empty( $this->options['app_id']) && !empty( $this->options['app_secret'] ) && !empty( $this->userToken ) ) {
+        if ( !empty( $this->options['app_id']) && !empty( $this->options['app_secret'] ) && empty( $this->userToken ) ) {
 
             $this->helper = $this->fb->getRedirectLoginHelper();
             $this->loginUrl = $this->helper->getLoginUrl($this->redirectURL, $this->permissions);
