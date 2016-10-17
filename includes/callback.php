@@ -86,9 +86,9 @@ class WPFPI_Callback {
 
 		if (! $this->accessToken->isLongLived()) {
 		  try {
-		    $this->accessToken = $this->oAuth2Client->getLongLivedAccessToken($accessToken);
+		    $this->accessToken = $this->oAuth2Client->getLongLivedAccessToken($this->accessToken);
 		  } catch (Facebook\Exceptions\FacebookSDKException $e) {
-		    echo "<p>Error getting long-lived access token: " . $helper->getMessage() . "</p>\n\n";
+		    echo "<p>Error getting long-lived access token: " . $this->helper->getMessage() . "</p>\n\n";
 		    exit;
 		  }
 
