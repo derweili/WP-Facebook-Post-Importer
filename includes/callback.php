@@ -82,6 +82,8 @@ class WPFPI_Callback {
 		  exit;
 		}
 
+		$this->oAuth2Client = $this->fb->getOAuth2Client();
+
 		if (! $this->accessToken->isLongLived()) {
 		  try {
 		    $this->accessToken = $this->oAuth2Client->getLongLivedAccessToken($accessToken);
@@ -94,7 +96,7 @@ class WPFPI_Callback {
 
 		update_option( 'wpfpi_access_token', $this->accessToken->getValue() );
 
-		
+
 
     }
 
