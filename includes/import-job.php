@@ -27,7 +27,6 @@ class WPFPI_CRONJOBS {
         //$this->add_import_job();
 
         if ( isset( $_GET["import"] ) ) {
-        	echo "test";
         	$this->add_import_job();
         }
 
@@ -72,8 +71,7 @@ class WPFPI_CRONJOBS {
     }
 
     public function add_import_job() {
-    	echo "add_import_job";
-    	if ( $this->app_credentials_available() && !empty( $userToken ) ) {
+    	if ( $this->app_credentials_available() && !empty( $this->userToken ) ) {
     		echo "before get accounts";
     		$this->get_accounts();
     		var_dump($this->accounts);
