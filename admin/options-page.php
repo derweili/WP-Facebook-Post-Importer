@@ -44,7 +44,7 @@ class WPFPI_Options {
         ]);
 
         if ( !empty( $this->userToken ) ) {
-            $$this->fb->setDefaultAccessToken($this->userToken);
+            $this->fb->setDefaultAccessToken($this->userToken);
         }
     }
 
