@@ -11,11 +11,25 @@ class WPFPI_IMPORT_TEMPLATES {
 	public function __construct( $new_post_id, $fb_post, $fb_post_attachements ) {
 		$this->new_post_id =  $new_post_id;
 		$this->fb_post =  $fb_post;
-		$this->fb_post_attachement =  $fb_post_attachements[0];
 
-		if ( isset( $this->fb_post_attachement['subattachments'] ) ) {
-			$this->subattachements =  $this->fb_post_attachement['subattachments'];
+		if ( $this->has_post_attachements( $fb_post_attachements ) ) { //Check if Post hast Attachents
+
+			$this->fb_post_attachement =  $fb_post_attachements[0]; // store attachement
+
+			if ( isset( $this->fb_post_attachement['subattachments'] ) ) { // check if post has subattachements
+				$this->subattachements =  $this->fb_post_attachement['subattachments']; // store subattachements
+			}
+
+			$this->switch_attachement_types(); //execute attachement process
+
 		}
+
+
+			
+
+		
+
+		
 
 		if ( $fb_post_attachements > 0 ) {
 			$this->switch_attachement_types();
@@ -25,6 +39,13 @@ class WPFPI_IMPORT_TEMPLATES {
 
 	}
 
+	private function has_post_attachements( $attachements ){
+		if ( count( $attachements ) > 0 ) {
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 	private function switch_attachement_types() {
 
