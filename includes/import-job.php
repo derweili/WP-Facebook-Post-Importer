@@ -91,20 +91,19 @@ class WPFPI_CRONJOBS {
 
     					//var_dump($fbpost);
     					//$this->attachements = $this->get_attachements_from_post( $fbpost[ "id" ] );
-    					if ( isset( $fbpost[ "message" ] ) ) {
-    						$this->mssage = $fbpost[ "message" ];
-    					}else{
-    						$this->message = ' ';
-    					}
+
     					$this->post_attributes = array(
     							'post_title'    => $fbpost[ "id" ],
-							    'post_content'  => $this->message,
+							    //'post_content'  => $this->message,
 							    'post_status'   => 'publish',
 							    'post_author'   => 1,
 							    //'post_type'   => 'post',
 							    //'post_category' => array( 8,39 )
     						);
-
+    					if ( isset( $fbpost[ "message" ] ) ) {
+    						$this->post_attributes['post_content'] $fbpost[ "message" ];
+    					}
+    					
     					$this->insert_post_return = wp_insert_post( $this->post_attributes, true);
     					var_dump($this->insert_post_return );
 
