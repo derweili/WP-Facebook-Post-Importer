@@ -160,7 +160,7 @@ class WPFPI_CRONJOBS {
 
     private function get_attachements_from_post( $fb_post_id = null ) {
     	try {
-		    $posts_request = $fb->get('/' . $fb_post_id . '/attachments');
+		    $posts_request = $this->fb->get('/' . $fb_post_id . '/attachments');
 		} catch(Facebook\Exceptions\FacebookResponseException $e) {
 		// When Graph returns an error
 			echo 'Graph returned an error: ' . $e->getMessage();
@@ -170,7 +170,7 @@ class WPFPI_CRONJOBS {
 			echo 'Facebook SDK returned an error: ' . $e->getMessage();
 			exit;
 		}
-		$response = $posts_request->getGraphEdge()->asArray();
+		return $posts_request->getGraphEdge()->asArray();
     }
 
 }
