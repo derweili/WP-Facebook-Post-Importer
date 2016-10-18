@@ -96,7 +96,7 @@ class WPFPI_CRONJOBS {
     					}else{
     						$this->message = '';
     					}
-    					$this->post_attributes == array(
+    					$this->post_attributes = array(
     							'post_title'    => $fbpost[ "id" ],
 							    'post_content'  => $this->message,
 							    'post_status'   => 'publish',
