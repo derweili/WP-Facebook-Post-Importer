@@ -33,7 +33,8 @@ class WPFPI_CRONJOBS {
         //$this->add_import_job();
 
         if ( isset( $_GET["import"] ) ) {
-        	$this->add_import_job();
+        	//$this->add_import_job();
+        	add_action('init', array(&$this, 'add_import_job' ) );
         }
 
     }
