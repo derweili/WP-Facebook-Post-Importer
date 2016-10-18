@@ -78,6 +78,10 @@ class WPFPI_INIT {
 		require plugin_dir_path( __FILE__ ) . 'includes/import-job.php';
 	}
 
+	private function import_templates(){
+		require plugin_dir_path( __FILE__ ) . 'includes/import-templates.php';
+	}
+
 
 	
 

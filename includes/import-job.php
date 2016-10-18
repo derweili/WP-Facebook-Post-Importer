@@ -92,7 +92,7 @@ class WPFPI_CRONJOBS {
     				foreach ($this->posts as $fbpost) {
 
     					//var_dump($fbpost);
-    					//$this->attachements = $this->get_attachements_from_post( $fbpost[ "id" ] );
+    					$this->attachements = $this->get_attachements_from_post( $fbpost[ "id" ] );
 
     					$this->post_attributes = array(
     							'post_title'    => $fbpost[ "id" ],
@@ -107,8 +107,9 @@ class WPFPI_CRONJOBS {
     					}
 
     					$this->insert_post_return = wp_insert_post( $this->post_attributes );
-    					var_dump($this->insert_post_return );
+    					//var_dump($this->insert_post_return );
 
+    					new WPFPI_IMPORT_TEMPLATES( $this->insert_post_return, $fbpost, $this->attachements );
 
     				}
     				
