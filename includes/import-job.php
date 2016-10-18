@@ -13,6 +13,9 @@ class WPFPI_CRONJOBS {
     private $attachements;
     private $post_data;
     private $post_attributes;
+    private $posts_request;
+    private $posts_response;
+    private $total_posts;
 
     public function __construct() {
 
@@ -109,7 +112,7 @@ class WPFPI_CRONJOBS {
 
     private function get_posts_from_page( $account_id = null ) {
 		try {
-			$posts_request = $fb->get('/' . $account_id . '/posts?limit=5');
+			$posts_request = $this->fb->get('/' . $account_id . '/posts?limit=5');
 		} catch(Facebook\Exceptions\FacebookResponseException $e) {
 		// When Graph returns an error
 			echo 'Graph returned an error: ' . $e->getMessage();
@@ -123,7 +126,7 @@ class WPFPI_CRONJOBS {
 
 		$posts_response = $posts_request->getGraphEdge();
 
-		if($fb->next($posts_response)) {
+		if($this->fb->next($posts_response)) {
 
 			$response_array = $posts_response->asArray();
 			$total_posts = array_merge($total_posts, $response_array);
