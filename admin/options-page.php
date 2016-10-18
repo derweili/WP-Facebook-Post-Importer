@@ -43,7 +43,7 @@ class WPFPI_Options {
           'default_graph_version' => 'v2.2',
         ]);
 
-        if ( !empty( $this->userToken; ) ) {
+        if ( !empty( $this->userToken ) ) {
             $$this->fb->setDefaultAccessToken($this->userToken);
         }
     }
