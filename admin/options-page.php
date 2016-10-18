@@ -81,6 +81,7 @@ class WPFPI_Options {
                     ),
                     'app_secret'       => array(
                         'title'         => __( 'App Secret', 'sample-domain' ),
+                        'type'          => 'password',
                     ),
                 ),
             )
