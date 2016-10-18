@@ -5,7 +5,8 @@ class WPFPI_IMPORT_TEMPLATES {
 	private $new_post_id;
 	private $fb_post;
 	private $fb_post_attachement;
-	private $subattachements;
+	private $subattachments;
+	private $img_attachment_ids = array();
 
 
 	public function __construct( $new_post_id, $fb_post, $fb_post_attachements ) {
@@ -17,7 +18,7 @@ class WPFPI_IMPORT_TEMPLATES {
 			$this->fb_post_attachement =  $fb_post_attachements[0]; // store attachement
 
 			if ( isset( $this->fb_post_attachement['subattachments'] ) ) { // check if post has subattachements
-				$this->subattachements =  $this->fb_post_attachement['subattachments']; // store subattachements
+				$this->subattachments =  $this->fb_post_attachement['subattachments']; // store subattachements
 			}
 
 			$this->switch_attachement_types(); //execute attachement process
@@ -53,7 +54,6 @@ class WPFPI_IMPORT_TEMPLATES {
 			case 'album':
 
 				$this->album_template();
-
 				break;
 			
 			default:
@@ -66,11 +66,33 @@ class WPFPI_IMPORT_TEMPLATES {
 
 	private function album_template() {
 		add_post_meta( $this->new_post_id, 'attachement_type', $this->fb_post_attachement['type'], true );
+		foreach ($subattachments as $subattachment) {
+			$this->img_attachment_ids[] = $this->import_image_from_url( $subattachment['media']['image']['src'], $subattachment['target']['id'] );
+		}
+		add_post_meta( $this->new_post_id, 'img_attachment_ids', $this->img_attachment_ids );
 	}
 
 
-	private function import_image_from_url() {
+	private function import_image_from_url($url = null, $filename = null, ) {
+		if( !class_exists( 'WP_Http' ) )
+			include_once( ABSPATH . WPINC. '/class-http.php' );
 
+		$photo = new WP_Http();
+		$photo = $photo->request( $url );
+		$attachment = wp_upload_bits( $filename . '.jpg', null, $photo['body'], date("Y-m", strtotime( $photo['headers']['last-modified'] ) ) );
+
+		$filetype = wp_check_filetype( basename( $attachment['file'] ), null );
+
+		$postinfo = array(
+			'post_mime_type'	=> $filetype['type'],
+			'post_title'		=> $filename . '',
+			'post_content'	=> '',
+			'post_status'	=> 'inherit',
+		);
+		$new_filename = $attachment['file'];
+		$attach_id = wp_insert_attachment( $postinfo, $new_filename, $this->new_post_id );
+
+		return $attach_id;
 	}
 
 
