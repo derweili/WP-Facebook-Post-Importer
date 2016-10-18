@@ -94,8 +94,11 @@ class WPFPI_CRONJOBS {
     					//var_dump($fbpost);
     					$this->attachements = $this->get_attachements_from_post( $fbpost[ "id" ] );
 
+    					$post_title = $this->shortText( $fbpost[ "message" ], 50 );
+    					if ( empty( $post_title ) ) $post_title = ' ';
+
     					$this->post_attributes = array(
-    							'post_title'    => $fbpost[ "id" ],
+    							'post_title'    => $post_title,
 							    //'post_content'  => $this->message,
 							    'post_status'   => 'publish',
 							    //'post_author'   => 1,
@@ -106,8 +109,14 @@ class WPFPI_CRONJOBS {
     						$this->post_attributes['post_content'] = $fbpost[ "message" ];
     					}
 
+
     					$this->insert_post_return = wp_insert_post( $this->post_attributes );
     					//var_dump($this->insert_post_return );
+
+    					add_post_meta( $this->insert_post_return, 'wpfpi_facebook_post_id', $fbpost[ "id" ], true );
+
+    					$timecode = strtotime( $fbpost[ "id" ] );
+    					add_post_meta( $this->insert_post_return, 'wpfpi_time', date( 'Y', $timecode ), true );
 
     					new WPFPI_IMPORT_TEMPLATES( $this->insert_post_return, $fbpost, $this->attachements );
 
@@ -172,6 +181,14 @@ class WPFPI_CRONJOBS {
 		}
 		return $posts_request->getGraphEdge()->asArray();
     }
+    private function shortText( $string, $lenght ) {
+    if (strlen($string) > $lenght ) {
+        $string = substr($string,0,$lenght).'…';
+        $string_ende = strrchr($string, ' ');
+        $string = str_replace($string_ende,'…', $string);
+    }
+    return $string;
+}
 
 }
 
