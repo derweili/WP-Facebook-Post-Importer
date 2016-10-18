@@ -74,7 +74,7 @@ class WPFPI_CRONJOBS {
 
     	if ( $this->app_credentials_available() && !empty( $userToken ) ) {
 
-    		$this->accounts;
+    		$this->get_accounts();
 
     		foreach ( $this->accounts as $account ) {
 
@@ -91,6 +91,7 @@ class WPFPI_CRONJOBS {
 							    'post_content'  => $fbpost[ "message" ],
 							    'post_status'   => 'publish',
 							    'post_author'   => 1,
+							    'post_type'   => 'post',
 							    //'post_category' => array( 8,39 )
     						);
 
