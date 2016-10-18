@@ -7,7 +7,6 @@ class WPFPI_IMPORT_TEMPLATES {
 	private $fb_post_attachement;
 	private $subattachements;
 
-	private 
 
 	public function __construct( $new_post_id, $fb_post, $fb_post_attachements ) {
 		$this->new_post_id =  $new_post_id;
