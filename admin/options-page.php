@@ -83,7 +83,7 @@ class WPFPI_Options {
         );
         
         if ( $this->app_credentials_available() && !empty( $this->userToken ) ) {
-            if ( get_accounts() != null ) {
+            if ( $this->get_accounts() != null ) {
                 $this->pages_fields = array();
                 foreach ( $this->accounts as $account ) {
                     $this->pages_fields[ $account["id"] ] = array(
