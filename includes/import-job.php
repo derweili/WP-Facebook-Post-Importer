@@ -94,8 +94,11 @@ class WPFPI_CRONJOBS {
     					//var_dump($fbpost);
     					$this->attachements = $this->get_attachements_from_post( $fbpost[ "id" ] );
 
-    					$post_title = $this->shortText( $fbpost[ "message" ], 50 );
-    					if ( empty( $post_title ) ) $post_title = ' ';
+    					$post_title = ' ';
+    					if ( $fbpost[ "message" ] ) {
+    						$post_title = $this->shortText( $fbpost[ "message" ], 50 );
+    					}
+    					
 
     					$this->post_attributes = array(
     							'post_title'    => $post_title,
