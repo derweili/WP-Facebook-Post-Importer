@@ -16,6 +16,7 @@ class WPFPI_CRONJOBS {
     private $posts_request;
     private $posts_response;
     private $total_posts;
+    private $message;
 
     public function __construct() {
 
@@ -90,13 +91,13 @@ class WPFPI_CRONJOBS {
     					var_dump($fbpost);
     					//$this->attachements = $this->get_attachements_from_post( $fbpost[ "id" ] );
     					if ( isset( $fbpost[ "message" ] ) ) {
-    						$mssage = $fbpost[ "message" ];
+    						$this->mssage = $fbpost[ "message" ];
     					}else{
-    						$message = '';
+    						$this->message = '';
     					}
     					$this->post_attributes == array(
     							'post_title'    => $fbpost[ "id" ],
-							    'post_content'  => $message,
+							    'post_content'  => $this->message,
 							    'post_status'   => 'publish',
 							    'post_author'   => 1,
 							    'post_type'   => 'post',
