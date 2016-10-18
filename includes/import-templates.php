@@ -65,7 +65,7 @@ class WPFPI_IMPORT_TEMPLATES {
 			'post_content' => $this->fb_post[ "message" ] . ' ' . $gallery_shortcode, 
 		);
 		wp_update_post( $post_attr );
-		
+
 	}
 
 
@@ -87,7 +87,12 @@ class WPFPI_IMPORT_TEMPLATES {
 		);
 		$new_filename = $attachment['file'];
 		
-		return wp_insert_attachment( $postinfo, $new_filename, $this->new_post_id );
+		$attach_id = wp_insert_attachment( $postinfo, $new_filename, $this->new_post_id );
+		
+		$attach_data = wp_generate_attachment_metadata( $attach_id, $new_filename );
+  		wp_update_attachment_metadata( $attach_id,  $attach_data );
+
+  		return $attach_id;
 
 	}
 
