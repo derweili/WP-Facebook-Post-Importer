@@ -77,7 +77,7 @@ class WPFPI_CRONJOBS {
     		//var_dump($this->accounts);
 
     		foreach ( $this->accounts as $account ) {
-
+    			var_dump($this->options);
     			if ( $this->options[$account["id"]] ) {
 
     				$this->posts = $this->get_posts_from_page( $account["id"] );
