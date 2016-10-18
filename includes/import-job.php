@@ -17,6 +17,7 @@ class WPFPI_CRONJOBS {
     private $posts_response;
     private $total_posts;
     private $message;
+    private $insert_post_return;
 
     public function __construct() {
 
@@ -88,7 +89,7 @@ class WPFPI_CRONJOBS {
 
     				foreach ($this->posts as $fbpost) {
 
-    					var_dump($fbpost);
+    					//var_dump($fbpost);
     					//$this->attachements = $this->get_attachements_from_post( $fbpost[ "id" ] );
     					if ( isset( $fbpost[ "message" ] ) ) {
     						$this->mssage = $fbpost[ "message" ];
@@ -104,7 +105,8 @@ class WPFPI_CRONJOBS {
 							    //'post_category' => array( 8,39 )
     						);
 
-    					wp_insert_post( $this->post_attributes );
+    					$this->insert_post_return = wp_insert_post( $this->post_attributes );
+    					var_dump($this->insert_post_return );
 
 
     				}
