@@ -88,7 +88,7 @@ class WPFPI_CRONJOBS {
     			if ( $this->options['account' . $account["id"]] ) {
 
     				$this->posts = $this->get_posts_from_page( $account["id"] );
-    				var_dump($this->posts);
+    				//var_dump($this->posts);
     				foreach ($this->posts as $fbpost) {
 
     					//var_dump($fbpost);

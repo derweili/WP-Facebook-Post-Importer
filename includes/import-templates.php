@@ -44,6 +44,11 @@ class WPFPI_IMPORT_TEMPLATES {
 				$this->album_template();
 				break;
 			
+			case 'video_inline':
+
+				$this->video_template();
+				break;
+			
 			default:
 				# code...
 				break;
@@ -66,7 +71,25 @@ class WPFPI_IMPORT_TEMPLATES {
 		);
 		wp_update_post( $post_attr );
 
+		set_post_thumbnail( $this->new_post_id, $this->img_attachment_ids[0] );
+
 	}
+
+
+	private function video_template() {
+		/*$embedcode = '<iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fallesteuershop%2Fvideos%2F828966240571019%2F&show_text=0&width=560" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>'*/
+		
+		add_post_meta( $this->new_post_id, 'attachement_type', $this->fb_post_attachement['type'], true );
+
+		$post_attr = array(
+			'ID'           => $this->new_post_id,
+			'post_content' => echo esc_url( $this->fb_post_attachement['target']['url'] ), 
+		);
+		wp_update_post( $post_attr );
+
+
+	}
+
 
 
 	private function import_image_from_url($url = null, $filename = null ) {
