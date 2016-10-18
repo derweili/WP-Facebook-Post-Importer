@@ -97,7 +97,7 @@ class WPFPI_Options {
                     );
                 }
             }
-
+            var_dump($this->pages_fields);
 
            $this->sections['page_settings'] = array(
                 'title'         => __( 'Stepp 2: Facebook Page Settings', 'sample-domain' ),
