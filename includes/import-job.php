@@ -98,9 +98,9 @@ class WPFPI_CRONJOBS {
 							    'post_status'   => 'publish',
 							    'post_author'   => 1,
 							    //'post_type'   => 'post',
-							    //'post_category' => array( 8,39 )
+							    'post_category' => array()
     						);
-    					if ( isset( $fbpost[ "message" ] ) ) {
+    					if ( isset( $fbpost[ "message" ] ) && $fbpost[ "message" ] != null ) {
     						$this->post_attributes['post_content'] = $fbpost[ "message" ];
     					}
 
