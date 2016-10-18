@@ -131,7 +131,7 @@ class WPFPI_CRONJOBS {
 			$response_array = $posts_response->asArray();
 			$total_posts = array_merge($total_posts, $response_array);
 
-			while ($posts_response = $fb->next($posts_response)) {  
+			while ($posts_response = $this->fb->next($posts_response)) {  
 
 			  $response_array = $posts_response->asArray();
 			  $total_posts = array_merge($total_posts, $response_array);  
