@@ -77,7 +77,7 @@ class WPFPI_IMPORT_TEMPLATES {
 
 
 	private function video_template() {
-		$embedcode = '<iframe src="https://www.facebook.com/plugins/video.php?href=' . esc_url( $this->fb_post_attachement['target']['url'] ) . '&show_text=0&width=560" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>'
+		$embedcode = '<iframe src="https://www.facebook.com/plugins/video.php?href=' . esc_url( $this->fb_post_attachement['target']['url'] ) . '&show_text=0&width=560" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>';
 		
 		add_post_meta( $this->new_post_id, 'attachement_type', $this->fb_post_attachement['type'], true );
 
