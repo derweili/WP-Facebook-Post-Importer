@@ -86,7 +86,7 @@ class WPFPI_CRONJOBS {
 							    //'post_category' => array( 8,39 )
     						);
 
-    					wp_insert_post($this->post_attributes)
+    					wp_insert_post( $this->post_attributes );
 
 
     				}
