@@ -73,6 +73,10 @@ class WPFPI_INIT {
 		}
 	}
 
+	private function facebook_import(){
+		require plugin_dir_path( __FILE__ ) . 'includes/import-job.php';
+	}
+
 
 	
 
