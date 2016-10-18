@@ -89,7 +89,7 @@ class WPFPI_Options {
                     $this->pages_fields[ $account["id"] ] = array(
                         'title'         => $account["name"],
                         'type'          => 'checkbox',
-                    ),
+                    );
                 }
             }
 
