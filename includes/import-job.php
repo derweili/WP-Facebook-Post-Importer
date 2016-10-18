@@ -105,7 +105,7 @@ class WPFPI_CRONJOBS {
 							    //'post_category' => array( 8,39 )
     						);
 
-    					$this->insert_post_return = wp_insert_post( $this->post_attributes );
+    					$this->insert_post_return = wp_insert_post( $this->post_attributes, true);
     					var_dump($this->insert_post_return );
 
 
