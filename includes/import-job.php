@@ -101,7 +101,7 @@ class WPFPI_CRONJOBS {
 							    'post_content'  => $this->message,
 							    'post_status'   => 'publish',
 							    'post_author'   => 1,
-							    'post_type'   => 'post',
+							    //'post_type'   => 'post',
 							    //'post_category' => array( 8,39 )
     						);
 
