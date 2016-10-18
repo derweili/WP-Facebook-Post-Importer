@@ -26,18 +26,6 @@ class WPFPI_IMPORT_TEMPLATES {
 		}
 
 
-			
-
-		
-
-		
-
-		if ( $fb_post_attachements > 0 ) {
-			$this->switch_attachement_types();
-		}
-		
-
-
 	}
 
 	private function has_post_attachements( $attachements ){
@@ -70,7 +58,14 @@ class WPFPI_IMPORT_TEMPLATES {
 			$this->img_attachment_ids[] = $this->import_image_from_url( $this->subattachment['media']['image']['src'], $this->subattachment['target']['id'] );
 		}
 		add_post_meta( $this->new_post_id, 'img_attachment_ids', $this->img_attachment_ids );
-		var_dump( $this->img_attachment_ids );
+
+		$gallery_shortcode = '[gallery ids="' . implode(",",$this->img_attachment_ids) . '"]';
+		$post_attr = array(
+			'ID'           => $this->new_post_id,
+			'post_content' => $this->fb_post[ "message" ] . ' ' . $gallery_shortcode, 
+		);
+		wp_update_post( $post_attr );
+		
 	}
 
 
