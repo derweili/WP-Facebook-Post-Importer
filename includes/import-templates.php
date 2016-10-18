@@ -83,7 +83,7 @@ class WPFPI_IMPORT_TEMPLATES {
 
 		$post_attr = array(
 			'ID'           => $this->new_post_id,
-			'post_content' => echo esc_url( $this->fb_post_attachement['target']['url'] ), 
+			'post_content' => esc_url( $this->fb_post_attachement['target']['url'] ), 
 		);
 		wp_update_post( $post_attr );
 
