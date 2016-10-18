@@ -89,10 +89,14 @@ class WPFPI_CRONJOBS {
 
     					var_dump($fbpost);
     					//$this->attachements = $this->get_attachements_from_post( $fbpost[ "id" ] );
-
+    					if ( isset( $fbpost[ "message" ] ) ) {
+    						$mssage = $fbpost[ "message" ];
+    					}else{
+    						$message = '';
+    					}
     					$this->post_attributes == array(
     							'post_title'    => $fbpost[ "id" ],
-							    'post_content'  => $fbpost[ "message" ],
+							    'post_content'  => $message,
 							    'post_status'   => 'publish',
 							    'post_author'   => 1,
 							    'post_type'   => 'post',
