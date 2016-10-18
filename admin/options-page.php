@@ -42,6 +42,10 @@ class WPFPI_Options {
           'app_secret' => $this->options['app_secret'],
           'default_graph_version' => 'v2.2',
         ]);
+
+        if ( !empty( $this->userToken; ) ) {
+            $$this->fb->setDefaultAccessToken($this->userToken);
+        }
     }
 
     private function load_options() {
