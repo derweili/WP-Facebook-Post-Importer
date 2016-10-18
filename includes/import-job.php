@@ -80,13 +80,14 @@ class WPFPI_CRONJOBS {
     		//var_dump($this->accounts);
 
     		foreach ( $this->accounts as $account ) {
-    			var_dump($this->options);
+
     			if ( $this->options['account' . $account["id"]] ) {
 
     				$this->posts = $this->get_posts_from_page( $account["id"] );
 
     				foreach ($this->posts as $fbpost) {
 
+    					var_dump($fbpost);
     					//$this->attachements = $this->get_attachements_from_post( $fbpost[ "id" ] );
 
     					$this->post_attributes == array(
