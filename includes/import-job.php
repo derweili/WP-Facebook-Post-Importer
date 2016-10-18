@@ -86,7 +86,7 @@ class WPFPI_CRONJOBS {
     			if ( $this->options['account' . $account["id"]] ) {
 
     				$this->posts = $this->get_posts_from_page( $account["id"] );
-
+    				var_dump($this->posts);
     				foreach ($this->posts as $fbpost) {
 
     					//var_dump($fbpost);
@@ -104,7 +104,7 @@ class WPFPI_CRONJOBS {
     						$this->post_attributes['post_content'] = $fbpost[ "message" ];
     					}
 
-    					$this->insert_post_return = wp_insert_post( $this->post_attributes, true);
+    					$this->insert_post_return = wp_insert_post( $this->post_attributes);
     					var_dump($this->insert_post_return );
 
 
