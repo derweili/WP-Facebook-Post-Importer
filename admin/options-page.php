@@ -94,10 +94,11 @@ class WPFPI_Options {
                     $this->pages_fields[ $account["id"] ] = array(
                         'title'         => $account["name"],
                         'type'          => 'checkbox',
+                        'id'          => 'account' . $account["id"],
                     );
                 }
             }
-            var_dump($this->pages_fields);
+           // var_dump($this->pages_fields);
 
            $this->sections['page_settings'] = array(
                 'title'         => __( 'Stepp 2: Facebook Page Settings', 'sample-domain' ),
