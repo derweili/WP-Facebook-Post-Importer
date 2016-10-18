@@ -101,9 +101,9 @@ class WPFPI_CRONJOBS {
 							    //'post_category' => array( 8,39 )
     						);
     					if ( isset( $fbpost[ "message" ] ) ) {
-    						$this->post_attributes['post_content'] $fbpost[ "message" ];
+    						$this->post_attributes['post_content'] = $fbpost[ "message" ];
     					}
-    					
+
     					$this->insert_post_return = wp_insert_post( $this->post_attributes, true);
     					var_dump($this->insert_post_return );
 
