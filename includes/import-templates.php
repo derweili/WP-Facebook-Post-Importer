@@ -73,7 +73,7 @@ class WPFPI_IMPORT_TEMPLATES {
 	}
 
 
-	private function import_image_from_url($url = null, $filename = null, ) {
+	private function import_image_from_url($url = null, $filename = null ) {
 		if( !class_exists( 'WP_Http' ) )
 			include_once( ABSPATH . WPINC. '/class-http.php' );
 
