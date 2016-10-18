@@ -12,7 +12,7 @@ class WPFPI_CRONJOBS {
     private $posts;
     private $attachements;
     private $post_data;
-    private $post_attributes;
+    public $post_attributes;
     private $posts_request;
     private $posts_response;
     private $total_posts;
