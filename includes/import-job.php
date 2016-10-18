@@ -75,6 +75,7 @@ class WPFPI_CRONJOBS {
     	if ( $this->app_credentials_available() && !empty( $userToken ) ) {
 
     		$this->get_accounts();
+    		var_dump($this->accounts);
 
     		foreach ( $this->accounts as $account ) {
 
