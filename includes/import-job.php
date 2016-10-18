@@ -74,7 +74,7 @@ class WPFPI_CRONJOBS {
     public function add_import_job() {
     	echo "add_import_job";
     	if ( $this->app_credentials_available() && !empty( $userToken ) ) {
-
+    		echo "before get accounts";
     		$this->get_accounts();
     		var_dump($this->accounts);
 
