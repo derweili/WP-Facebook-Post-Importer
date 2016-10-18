@@ -27,8 +27,6 @@ class WPFPI_CRONJOBS {
 
         $this->add_import_job();
 
-        echo "test";
-
     }
 
     private function load_options() {

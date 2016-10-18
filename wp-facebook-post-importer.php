@@ -35,6 +35,7 @@ class WPFPI_INIT {
 	public function __construct() {
 
 		$this->load_fb_skd();
+		$this->facebook_import();
 
 		if ( is_admin() ) { // load admin functions if backend ist loaded
 			$this->admin_init();
