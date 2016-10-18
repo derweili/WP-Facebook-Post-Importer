@@ -61,7 +61,7 @@ class WPFPI_CRONJOBS {
 
     public function schedule_import_event () {
 
-    	  wp_schedule_event( time(), 'hourly', 'wpfpi_import_posts' );
+    	  //wp_schedule_event( time(), 'hourly', 'wpfpi_import_posts' );
     	  add_action( 'wpfpi_import_posts',  array( &$this, 'add_import_job' ) );
 
     }
