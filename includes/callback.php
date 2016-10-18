@@ -84,7 +84,7 @@ class WPFPI_Callback {
 
 		$this->oAuth2Client = $this->fb->getOAuth2Client();
 
-		if (! $this->accessToken->isLongLived()) {
+		/*if (! $this->accessToken->isLongLived()) {
 		  try {
 		    $this->accessToken = $this->oAuth2Client->getLongLivedAccessToken($this->accessToken);
 		  } catch (Facebook\Exceptions\FacebookSDKException $e) {
@@ -92,7 +92,7 @@ class WPFPI_Callback {
 		    exit;
 		  }
 
-		}
+		}*/
 
 		update_option( 'wpfpi_access_token', $this->accessToken->getValue() );
 
