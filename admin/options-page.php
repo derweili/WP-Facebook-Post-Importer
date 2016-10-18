@@ -18,6 +18,10 @@ class WPFPI_Options {
 
     private $loginURL;
 
+    private $accounts;
+
+    private $pages_fields;
+
     public function __construct() {
 
         $this->redirectURL = home_url( '/' );
@@ -29,8 +33,6 @@ class WPFPI_Options {
         }
    
         $this->options_page_settings();
-
-
 
     }
 
@@ -81,22 +83,23 @@ class WPFPI_Options {
         );
         
         if ( $this->app_credentials_available() && !empty( $this->userToken ) ) {
+            if ( get_accounts() != null ) {
+                $this->pages_fields = array();
+                foreach ( $this->accounts as $account ) {
+                    $this->pages_fields[ $account["id"] ] = array(
+                        'title'         => $account["name"],
+                        'type'          => 'checkbox',
+                    ),
+                }
+            }
+
+
            $this->sections['page_settings'] = array(
                 'title'         => __( 'Stepp 2: Facebook Page Settings', 'sample-domain' ),
                 'custom'        => true,
                 'text'          => '<p>' . __( 'Select the page from which the posts should be importet', 'sample-domain' ) . '</p>',
                 //'callback'      => 'hello world <a href="#">Mit Facebook verbinden</a>',
-                'fields'        => array(
-                    'importpages'         => array(
-                        'title'         => __( 'Pages', 'sample-domain' ),
-                        'type'          => 'checkbox',
-                        'text'          => __( 'Text attributes are used as labels for checkboxes' ),
-                        'choices'       => array(
-                            '123456'    => __( 'Facebook Page 1', 'sample-domain' ),
-                            '654321'    => __( 'Facebook Page 2', 'sample-domain' ),
-                        ),
-                    ),
-                ),
+                'fields'        => $this->pages_fields,
             );
         }
 
@@ -127,6 +130,14 @@ class WPFPI_Options {
         }
 
     }
+
+
+    private function get_accounts () {
+        $this->accounts = $this->fb->get('/me/accounts');
+        $this->accounts = $this->accounts->getGraphEdge()->asArray();
+        return $this->accounts;
+    }
+
 
 }
 
