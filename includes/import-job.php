@@ -22,7 +22,6 @@ class WPFPI_CRONJOBS {
             $this->connect_to_facebook();
         }
    
-        $this->options_page_settings();
         $this->schedule_import_event();
 
         $this->add_import_job();
