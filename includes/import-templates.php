@@ -70,6 +70,7 @@ class WPFPI_IMPORT_TEMPLATES {
 			$this->img_attachment_ids[] = $this->import_image_from_url( $this->subattachment['media']['image']['src'], $this->subattachment['target']['id'] );
 		}
 		add_post_meta( $this->new_post_id, 'img_attachment_ids', $this->img_attachment_ids );
+		var_dump( $this->img_attachment_ids );
 	}
 
 
@@ -90,9 +91,9 @@ class WPFPI_IMPORT_TEMPLATES {
 			'post_status'	=> 'inherit',
 		);
 		$new_filename = $attachment['file'];
-		$attach_id = wp_insert_attachment( $postinfo, $new_filename, $this->new_post_id );
+		
+		return wp_insert_attachment( $postinfo, $new_filename, $this->new_post_id );
 
-		return $attach_id;
 	}
 
 
