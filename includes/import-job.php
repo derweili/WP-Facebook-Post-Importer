@@ -94,7 +94,7 @@ class WPFPI_CRONJOBS {
     					if ( isset( $fbpost[ "message" ] ) ) {
     						$this->mssage = $fbpost[ "message" ];
     					}else{
-    						$this->message = '';
+    						$this->message = ' ';
     					}
     					$this->post_attributes = array(
     							'post_title'    => $fbpost[ "id" ],
