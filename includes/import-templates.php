@@ -67,7 +67,7 @@ class WPFPI_IMPORT_TEMPLATES {
 	private function album_template() {
 		add_post_meta( $this->new_post_id, 'attachement_type', $this->fb_post_attachement['type'], true );
 		foreach ($this->subattachments as $this->subattachment) {
-			$this->img_attachment_ids[] = $this->import_image_from_url( $subattachment['media']['image']['src'], $subattachment['target']['id'] );
+			$this->img_attachment_ids[] = $this->import_image_from_url( $this->subattachment['media']['image']['src'], $this->subattachment['target']['id'] );
 		}
 		add_post_meta( $this->new_post_id, 'img_attachment_ids', $this->img_attachment_ids );
 	}
