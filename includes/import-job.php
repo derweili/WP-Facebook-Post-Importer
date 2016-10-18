@@ -170,7 +170,7 @@ class WPFPI_CRONJOBS {
 			echo 'Facebook SDK returned an error: ' . $e->getMessage();
 			exit;
 		}
-		return = $posts_request->getGraphEdge()->asArray();
+		return $posts_request->getGraphEdge()->asArray();
     }
 
 }
