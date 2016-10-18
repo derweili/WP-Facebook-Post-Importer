@@ -46,6 +46,11 @@ class WPFPI_CRONJOBS {
             $this->get_accounts();
         }
     }
+    private function get_accounts () {
+        $this->accounts = $this->fb->get('/me/accounts');
+        $this->accounts = $this->accounts->getGraphEdge()->asArray();
+        return $this->accounts;
+    }
 
     private function app_credentials_available(){
         if ( !empty( $this->options['app_id']) && !empty( $this->options['app_secret'] ) ) {
