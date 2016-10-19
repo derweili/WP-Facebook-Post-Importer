@@ -117,10 +117,10 @@ class WPFPI_CRONJOBS {
     					//var_dump($this->insert_post_return );
 
     					add_post_meta( $this->insert_post_return, 'wpfpi_facebook_post_id', $fbpost[ "id" ], true );
-
-    					$timecode = strtotime( $fbpost[ "created_time" ]->date );
+                        var_dump($fbpost[ "created_time" ]->date)
+    					/*$timecode = strtotime( $fbpost[ "created_time" ]->date );
     					add_post_meta( $this->insert_post_return, 'wpfpi_time', date( 'Y', $timecode ), true );
-
+*/
     					new WPFPI_IMPORT_TEMPLATES( $this->insert_post_return, $fbpost, $this->attachements );
 
     				}
