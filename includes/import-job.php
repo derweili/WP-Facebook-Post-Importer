@@ -19,6 +19,7 @@ class WPFPI_CRONJOBS {
     private $total_posts;
     private $message;
     private $insert_post_return;
+    private $lastImportRun = '&since=';
 
     public function __construct() {
 
@@ -42,6 +43,7 @@ class WPFPI_CRONJOBS {
     private function load_options() {
         $this->options = get_option( 'wp-facebook-post-importer', array() );
         $this->userToken = get_option( 'wpfpi_access_token' );
+        $this->lastImportRun .= get_option( 'wpfpi_last_import_run' );
     }
 
     private function connect_to_facebook(){
@@ -134,12 +136,14 @@ class WPFPI_CRONJOBS {
     			}
     		}
 
+            update_option( 'wpfpi_last_import_run', date('Y-m-d H:i:s') );
+
     	}
     }
 
     private function get_posts_from_page( $account_id = null ) {
 		try {
-			$posts_request = $this->fb->get('/' . $account_id . '/posts?limit=5');
+			$posts_request = $this->fb->get('/' . $account_id . '/posts?limit=5' . $this->lastImportRun);
 		} catch(Facebook\Exceptions\FacebookResponseException $e) {
 		// When Graph returns an error
 			echo 'Graph returned an error: ' . $e->getMessage();
