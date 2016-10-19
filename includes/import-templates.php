@@ -142,7 +142,7 @@ class WPFPI_IMPORT_TEMPLATES {
 		$attachment_meta = array(
 				'width' => $width,
 				'height' => $height,
-			)
+			);
 
 		wp_update_attachment_metadata( $attach_id , $attachment_meta );
 
