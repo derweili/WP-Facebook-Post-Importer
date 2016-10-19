@@ -7,6 +7,7 @@ class WPFPI_IMPORT_TEMPLATES {
 	private $fb_post_attachement;
 	private $subattachments;
 	private $img_attachment_ids = array();
+	private $message = ' ';
 
 
 	public function __construct( $new_post_id, $fb_post, $fb_post_attachements ) {
@@ -25,6 +26,9 @@ class WPFPI_IMPORT_TEMPLATES {
 
 		}
 
+		if ( isset( $this->fb_post[ "message" ] ) ) {
+			$this->message =  $this->fb_post[ "message" ];
+		}
 
 	}
 
@@ -88,7 +92,7 @@ class WPFPI_IMPORT_TEMPLATES {
 
 		$post_attr = array(
 			'ID'           => $this->new_post_id,
-			'post_content' => $embedcode . $this->fb_post[ "message" ],
+			'post_content' => $embedcode . $this->message,
 		);
 		wp_update_post( $post_attr );
 

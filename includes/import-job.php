@@ -106,7 +106,8 @@ class WPFPI_CRONJOBS {
 							    'post_status'   => 'publish',
 							    //'post_author'   => 1,
 							    //'post_type'   => 'post',
-							    'post_category' => array()
+							    'post_category' => array(),
+                                'post_date' => $fbpost[ "created_time" ]->format('Y-m-d H:i:s')
     						);
     					if ( isset( $fbpost[ "message" ] ) && $fbpost[ "message" ] != null ) {
     						$this->post_attributes['post_content'] = $fbpost[ "message" ];
@@ -117,9 +118,8 @@ class WPFPI_CRONJOBS {
     					//var_dump($this->insert_post_return );
 
     					add_post_meta( $this->insert_post_return, 'wpfpi_facebook_post_id', $fbpost[ "id" ], true );
-                        var_dump( $fbpost[ "created_time" ]->format('Y-m-d H:i:s') );
-    					/*$timecode = strtotime( $fbpost[ "created_time" ]->date );
-    					add_post_meta( $this->insert_post_return, 'wpfpi_time', date( 'Y', $timecode ), true );
+
+    					/* add_post_meta( $this->insert_post_return, 'wpfpi_time', date( 'Y', $timecode ), true );
 */
     					new WPFPI_IMPORT_TEMPLATES( $this->insert_post_return, $fbpost, $this->attachements );
 
