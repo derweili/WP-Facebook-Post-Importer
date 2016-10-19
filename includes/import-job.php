@@ -40,12 +40,19 @@ class WPFPI_CRONJOBS {
 
     }
 
+    /*
+    * load options from database (app credentials, access token, time of last cronjob run)
+    */
+
     private function load_options() {
         $this->options = get_option( 'wp-facebook-post-importer', array() );
         $this->userToken = get_option( 'wpfpi_access_token' );
         $this->lastImportRun .= get_option( 'wpfpi_last_import_run' );
     }
 
+    /*
+    * init connection to facebook via php sdk
+    */
     private function connect_to_facebook(){
         $this->fb = new Facebook\Facebook([
           'app_id' => $this->options['app_id'], // Replace {app-id} with your app id
@@ -58,11 +65,20 @@ class WPFPI_CRONJOBS {
             $this->get_accounts();
         }
     }
+
+    /*
+    * list all accounts managed by user
+    */
+
     private function get_accounts () {
         $this->accounts = $this->fb->get('/me/accounts');
         $this->accounts = $this->accounts->getGraphEdge()->asArray();
         return $this->accounts;
     }
+
+    /*
+    * check if app credentials are available and return true or false
+    */
 
     private function app_credentials_available(){
         if ( !empty( $this->options['app_id']) && !empty( $this->options['app_secret'] ) ) {
@@ -71,6 +87,10 @@ class WPFPI_CRONJOBS {
             return false;
         }
     }
+
+    /**
+    * register wp cron job and add import function to action hook
+    */
 
     public function schedule_import_event () {
 
@@ -85,6 +105,17 @@ class WPFPI_CRONJOBS {
 
     }
 
+    /**
+    *
+    * Import Job
+    * Step 1: Loop through all user account and check if account is marked as active in database (checkbox is checked on options page)
+    * Step 2: Load all posts from account used Method: get_posts_from_page()
+    * Step 3: Loop through all posts and insert each as wordpress post
+    * Step 4: Generate WPFPI_IMPORT_TEMPLATES object for each post to handle post attachments
+    * Step 5: Store current time in database to use as start time on next load
+    *
+    */
+
     public function add_import_job() {
     	if ( $this->app_credentials_available() && !empty( $this->userToken ) ) {
     		//echo "before get accounts";
@@ -97,10 +128,8 @@ class WPFPI_CRONJOBS {
     			if ( $this->options['account' . $account["id"]] ) {
 
     				$this->posts = $this->get_posts_from_page( $account["id"] );
-    				//var_dump($this->posts);
     				foreach ($this->posts as $fbpost) {
 
-    					//var_dump($fbpost);
     					$this->attachements = $this->get_attachements_from_post( $fbpost[ "id" ] );
 
     					$post_title = ' ';
@@ -124,12 +153,10 @@ class WPFPI_CRONJOBS {
 
 
     					$this->insert_post_return = wp_insert_post( $this->post_attributes );
-    					//var_dump($this->insert_post_return );
 
     					add_post_meta( $this->insert_post_return, 'wpfpi_facebook_post_id', $fbpost[ "id" ], true );
 
-    					/* add_post_meta( $this->insert_post_return, 'wpfpi_time', date( 'Y', $timecode ), true );
-*/
+
     					new WPFPI_IMPORT_TEMPLATES( $this->insert_post_return, $fbpost, $this->attachements );
 
     				}
@@ -137,13 +164,16 @@ class WPFPI_CRONJOBS {
 
     			}
     		}
-            
+
             update_option( 'wpfpi_last_import_run', date('Y-m-d H:i:s') );
 
 
     	}
     }
 
+    /*
+    * get all posts from page based on account id
+    */
     private function get_posts_from_page( $account_id = null ) {
 		try {
 			$posts_request = $this->fb->get('/' . $account_id . '/posts?limit=5' . $this->lastImportRun);
@@ -181,6 +211,9 @@ class WPFPI_CRONJOBS {
 		}
     }
 
+    /*
+    * get post attachments based on post id
+    */
 
     private function get_attachements_from_post( $fb_post_id = null ) {
     	try {
@@ -196,14 +229,18 @@ class WPFPI_CRONJOBS {
 		}
 		return $posts_request->getGraphEdge()->asArray();
     }
+
+    /*
+    * Trim text function to use post message as post title
+    */
     private function shortText( $string, $lenght ) {
-    if (strlen($string) > $lenght ) {
-        $string = substr($string,0,$lenght).'…';
-        $string_ende = strrchr($string, ' ');
-        $string = str_replace($string_ende,'…', $string);
+        if (strlen($string) > $lenght ) {
+            $string = substr($string,0,$lenght).'…';
+            $string_ende = strrchr($string, ' ');
+            $string = str_replace($string_ende,'…', $string);
+        }
+        return $string;
     }
-    return $string;
-}
 
 }
 

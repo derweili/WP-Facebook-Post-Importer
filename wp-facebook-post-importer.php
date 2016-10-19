@@ -27,6 +27,17 @@ class WPFPI_INIT {
 	private $options;
 
 	public function __construct() {
+		/**
+		*
+		* initial load:
+		* Facebook PHP DSK
+		* Facebook import functions
+		* Facebook import Templates
+		* 
+		* load options page if is_admin
+		* 
+		* 
+		*/
 
 		$this->load_fb_skd();
 		$this->facebook_import();
@@ -36,14 +47,8 @@ class WPFPI_INIT {
 			$this->admin_init();
 		}
 
-		add_action('init', array( $this, 'callback') );
-
-		/*if( ! is_admin() && current_user_can( 'manage_options' ) ) { // load callback functions
-			$this->callback();
-		}*/
-
-
-			//var_dump( wp_get_attachment_metadata( 1734 ) );
+		// load callback function on init hook
+		add_action('init', array( $this, 'callback');
 
 	}
 
@@ -51,10 +56,10 @@ class WPFPI_INIT {
 	private function admin_init() {
 
 		// Include Options Pge
-		if ( ! class_exists( 'RationalOptionPages' ) ) {
+		if ( ! class_exists( 'RationalOptionPages' ) ) { // load RationalOptionPages (library to generate wordpress options pages)
 			require plugin_dir_path( __FILE__ ) . 'vendor/RationalOptionPages.php';
 		}
-		require plugin_dir_path( __FILE__ ) . 'admin/options-page.php';
+		require plugin_dir_path( __FILE__ ) . 'admin/options-page.php'; // load options page class
 
 	}
 
@@ -67,16 +72,16 @@ class WPFPI_INIT {
 
 	private function load_fb_skd(){
 		if ( !class_exists('Facebook\Facebook')) {
-			require plugin_dir_path( __FILE__ ) . 'fb-sdk/autoload.php';
+			require plugin_dir_path( __FILE__ ) . 'fb-sdk/autoload.php'; // include facebook php sdk
 		}
 	}
 
 	public function facebook_import(){
-		require plugin_dir_path( __FILE__ ) . 'includes/import-job.php';
+		require plugin_dir_path( __FILE__ ) . 'includes/import-job.php'; // load import jobs (wp_cron jobs)
 	}
 
 	private function import_templates(){
-		require plugin_dir_path( __FILE__ ) . 'includes/import-templates.php';
+		require plugin_dir_path( __FILE__ ) . 'includes/import-templates.php'; // load import templates to handle facebook post attachments
 	}
 
 

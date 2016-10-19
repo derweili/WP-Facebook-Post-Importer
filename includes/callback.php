@@ -12,6 +12,8 @@ class WPFPI_Callback {
 	private $accessToken;
 	private $oAuth2Client;
 
+
+
 	public function __construct() {
 
 
@@ -29,9 +31,17 @@ class WPFPI_Callback {
 
     }
 
+    /*
+    * get options (app id and secret) from database and store as variable
+    */
+
     private function load_options() {
         $this->options = get_option( 'wp-facebook-post-importer', array() );
     }
+
+    /*
+	* init facebook connection via php sdk
+	*/
 
     private function connect_to_facebook(){
         $this->fb = new Facebook\Facebook([
@@ -42,6 +52,10 @@ class WPFPI_Callback {
         $this->helper = $this->fb->getRedirectLoginHelper();
 
     }
+
+    /*
+    * check if app credentials are available and return false or true
+    */
 
     private function app_credentials_available(){
         if ( !empty( $this->options['app_id']) && !empty( $this->options['app_secret'] ) ) {
@@ -55,6 +69,11 @@ class WPFPI_Callback {
         }
     }
 
+
+    /*
+    * get access token from facebook and store as option in options table
+    * handle errors
+    */
 
     private function get_access_token() {
 
@@ -86,16 +105,6 @@ class WPFPI_Callback {
 		}
 
 		$this->oAuth2Client = $this->fb->getOAuth2Client();
-
-		/*if (! $this->accessToken->isLongLived()) {
-		  try {
-		    $this->accessToken = $this->oAuth2Client->getLongLivedAccessToken($this->accessToken);
-		  } catch (Facebook\Exceptions\FacebookSDKException $e) {
-		    echo "<p>Error getting long-lived access token: " . $this->helper->getMessage() . "</p>\n\n";
-		    exit;
-		  }
-
-		}*/
 
 		update_option( 'wpfpi_access_token', $this->accessToken->getValue() );
 

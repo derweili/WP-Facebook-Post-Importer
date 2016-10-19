@@ -32,6 +32,9 @@ class WPFPI_IMPORT_TEMPLATES {
 
 	}
 
+	/*
+	* Check if given post has post attachments
+	*/
 	private function has_post_attachements( $attachements ){
 		if ( count( $attachements ) > 0 ) {
 			return true;
@@ -40,6 +43,9 @@ class WPFPI_IMPORT_TEMPLATES {
 		}
 	}
 
+	/*
+	* Check which type of attachment is served
+	*/
 	private function switch_attachement_types() {
 
 		switch ($this->fb_post_attachement['type']) {
@@ -66,6 +72,12 @@ class WPFPI_IMPORT_TEMPLATES {
 
 	}
 
+	/*
+	* handle album attachment
+	* store all image within WordPress Media Library and add al images as WordPress Gallery inside post content
+	* use first image from album as post thumbnail
+	*/
+
 	private function album_template() {
 		add_post_meta( $this->new_post_id, 'attachement_type', $this->fb_post_attachement['type'], true );
 		foreach ($this->subattachments as $this->subattachment) {
@@ -84,6 +96,10 @@ class WPFPI_IMPORT_TEMPLATES {
 
 	}
 
+	/*
+	* handle video template
+	* Generate embed code from video url and send embed code to post content
+	*/
 
 	private function video_template() {
 		$embedcode = '<iframe src="https://www.facebook.com/plugins/video.php?href=' . urlencode( $this->fb_post_attachement['target']['url'] ) . '&show_text=0&width=560" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>';
@@ -99,7 +115,11 @@ class WPFPI_IMPORT_TEMPLATES {
 
 	}
 
-
+	/*
+	* handle (single) photo post
+	* store image within WordPress Media Gallery
+	* set new photo as post thumbnail
+	*/
 	private function photo_template() {
 		
 		add_post_meta( $this->new_post_id, 'attachement_type', $this->fb_post_attachement['type'], true );
@@ -116,7 +136,15 @@ class WPFPI_IMPORT_TEMPLATES {
 	}
 
 
-
+	/**
+	*
+	* Handle import image process
+	* Download image from Facebook Server
+	* Add image to wordpress Media Library
+	* update attachment meta from FB meta values
+	* return new image id
+	*
+	*/
 	private function import_image_from_url($url = null, $filename = null, $width, $height ) {
 		if( !class_exists( 'WP_Http' ) )
 			include_once( ABSPATH . WPINC. '/class-http.php' );

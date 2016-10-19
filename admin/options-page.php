@@ -18,7 +18,7 @@ class WPFPI_Options {
     private $helper;
     private $userToken;
 
-    private $permissions = ['email', 'publish_pages', 'manage_pages', 'user_posts', 'publish_actions'];
+    private $permissions = ['email', 'publish_pages', 'manage_pages', 'user_posts', 'publish_actions']; // facebook permissions
 
     private $loginURL;
 
@@ -28,33 +28,37 @@ class WPFPI_Options {
 
     public function __construct() {
 
+        /*
+        * set "login with Facebook" redirect url to wp home url
+        */
+
         $this->redirectURL = home_url( '/' );
 
-        $this->load_options();
+        $this->load_options(); // load options
 
-        if ( $this->app_credentials_available() ) {
+        if ( $this->app_credentials_available() ) { // init facebook connection if app credentials are available
             $this->connect_to_facebook();
         }
    
-        $this->options_page_settings();
+        $this->options_page_settings(); // load options page settings
 
     }
 
-    private function connect_to_facebook(){
+    private function connect_to_facebook(){ // init connection to facebook based on app id and secret from options
         $this->fb = new Facebook\Facebook([
           'app_id' => $this->options['app_id'], // Replace {app-id} with your app id
           'app_secret' => $this->options['app_secret'],
           'default_graph_version' => 'v2.2',
         ]);
 
-        if ( !empty( $this->userToken ) ) {
+        if ( !empty( $this->userToken ) ) { // if user token is alreade stored, set user token as default access token for all fb connections
             $this->fb->setDefaultAccessToken($this->userToken);
         }
     }
 
     private function load_options() {
-        $this->options = get_option( 'wp-facebook-post-importer', array() );
-        $this->userToken = get_option( 'wpfpi_access_token' );
+        $this->options = get_option( 'wp-facebook-post-importer', array() ); // load options page - options
+        $this->userToken = get_option( 'wpfpi_access_token' ); // load stored access token
     }
 
     private function options_page_settings() {
@@ -72,12 +76,18 @@ class WPFPI_Options {
 
     private function options_page_sections() {
 
+        /**
+        *
+        * Create Input fields for App ID and App Secred
+        * Load "login with facebook" link as callback when app credentials are available but no token is stored
+        *
+        */
+
         $this->sections = array(
             'app_credentials'   => array(
                 'title'         => __( 'Stepp 1: App Credentials', 'sample-domain' ),
                 'custom'        => true,
                 'text'          => '<p>' . __( 'Please enter you app credentials', 'sample-domain' ) . '</p>',
-               // 'include'       => plugin_dir_path( __FILE__ ) . '/your-include.php',
                 'callback'      => $this->login_with_facebook_link(),
                 'fields'        => array(
                     'app_id'       => array(
@@ -91,10 +101,11 @@ class WPFPI_Options {
             )
         );
         
-        if ( $this->app_credentials_available() && !empty( $this->userToken ) ) {
-            if ( $this->get_accounts() != null ) {
+
+        if ( $this->app_credentials_available() && !empty( $this->userToken ) ) { // Check if app credentials and user token are available
+            if ( $this->get_accounts() != null ) { // load user accounts ( facebook pages managed by authorized user ) and check if accounts are available
                 $this->pages_fields = array();
-                foreach ( $this->accounts as $account ) {
+                foreach ( $this->accounts as $account ) { // loop through accounts and store required information inside array -> build one settings field for each account
                     $this->pages_fields[ $account["id"] ] = array(
                         'title'         => $account["name"],
                         'type'          => 'checkbox',
@@ -117,13 +128,22 @@ class WPFPI_Options {
 
     }
 
-    private function app_credentials_available(){
+
+    /*
+    * check if app credentials are set and return true or false
+    */
+
+    private function app_credentials_available(){ 
         if ( !empty( $this->options['app_id']) && !empty( $this->options['app_secret'] ) ) {
             return true;
         }else{
             return false;
         }
     }
+
+    /*
+    * Get login with facebook link if account credentials are available but no token is stored
+    */
 
     private function login_with_facebook_link (){
 
@@ -141,8 +161,10 @@ class WPFPI_Options {
 
     }
 
-
-    private function get_accounts () {
+    /*
+    * handle accounts call to list all user accounts
+    */
+    private function get_accounts () { 
         $this->accounts = $this->fb->get('/me/accounts');
         $this->accounts = $this->accounts->getGraphEdge()->asArray();
         return $this->accounts;
