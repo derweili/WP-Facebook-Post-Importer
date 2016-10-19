@@ -91,7 +91,6 @@ class WPFPI_CRONJOBS {
     		$this->get_accounts();
     		//var_dump($this->accounts);
 
-            update_option( 'wpfpi_last_import_run', date('Y-m-d H:i:s') );
 
     		foreach ( $this->accounts as $account ) {
 
@@ -138,7 +137,8 @@ class WPFPI_CRONJOBS {
 
     			}
     		}
-
+            
+            update_option( 'wpfpi_last_import_run', date('Y-m-d H:i:s') );
 
 
     	}
