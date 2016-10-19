@@ -69,7 +69,7 @@ class WPFPI_IMPORT_TEMPLATES {
 	private function album_template() {
 		add_post_meta( $this->new_post_id, 'attachement_type', $this->fb_post_attachement['type'], true );
 		foreach ($this->subattachments as $this->subattachment) {
-			$this->img_attachment_ids[] = $this->import_image_from_url( $this->subattachment['media']['image']['src'], $this->subattachment['target']['id'] );
+			$this->img_attachment_ids[] = $this->import_image_from_url( $this->subattachment['media']['image']['src'], $this->subattachment['target']['id'], $this->subattachment['media']['image']['width'], $this->subattachment['media']['image']['height'] );
 		}
 		add_post_meta( $this->new_post_id, 'img_attachment_ids', $this->img_attachment_ids );
 
@@ -104,7 +104,7 @@ class WPFPI_IMPORT_TEMPLATES {
 		
 		add_post_meta( $this->new_post_id, 'attachement_type', $this->fb_post_attachement['type'], true );
 
-		$img_id = $this->import_image_from_url( $this->fb_post_attachement['media']['image']['src'], $this->fb_post_attachement['target']['id'] );
+		$img_id = $this->import_image_from_url( $this->fb_post_attachement['media']['image']['src'], $this->fb_post_attachement['target']['id'], $this->fb_post_attachement['media']['image'][['width'], $this->fb_post_attachement['media']['image'][['height'] );
 		set_post_thumbnail( $this->new_post_id, $img_id );
 		/*$post_attr = array(
 			'ID'           => $this->new_post_id,
@@ -117,7 +117,7 @@ class WPFPI_IMPORT_TEMPLATES {
 
 
 
-	private function import_image_from_url($url = null, $filename = null ) {
+	private function import_image_from_url($url = null, $filename = null, $width, $height ) {
 		if( !class_exists( 'WP_Http' ) )
 			include_once( ABSPATH . WPINC. '/class-http.php' );
 
@@ -138,6 +138,13 @@ class WPFPI_IMPORT_TEMPLATES {
 		$attach_id = wp_insert_attachment( $postinfo, $new_filename, $this->new_post_id );
 		//$attach_data = wp_generate_attachment_metadata( $attach_id, $new_filename );
   		//wp_update_attachment_metadata( $attach_id,  $attach_data );
+
+		$attachment_meta = array(
+				'width' => $width,
+				'height' => $height,
+			)
+
+		wp_update_attachment_metadata( $attach_id , $attachment_meta );
 
   		return $attach_id;
 
