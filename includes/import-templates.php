@@ -104,7 +104,7 @@ class WPFPI_IMPORT_TEMPLATES {
 		
 		add_post_meta( $this->new_post_id, 'attachement_type', $this->fb_post_attachement['type'], true );
 
-		$img_id = $this->import_image_from_url( $this->fb_post_attachement['media']['image']['src'], $this->fb_post_attachement['target']['id'], $this->fb_post_attachement['media']['image'][['width'], $this->fb_post_attachement['media']['image'][['height'] );
+		$img_id = $this->import_image_from_url( $this->fb_post_attachement['media']['image']['src'], $this->fb_post_attachement['target']['id'], $this->fb_post_attachement['media']['image']['width'], $this->fb_post_attachement['media']['image']['height'] );
 		set_post_thumbnail( $this->new_post_id, $img_id );
 		/*$post_attr = array(
 			'ID'           => $this->new_post_id,
