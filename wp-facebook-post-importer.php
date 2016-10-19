@@ -48,9 +48,8 @@ class WPFPI_INIT {
 			$this->callback();
 		}*/
 
-		if ( $_GET['attachement'] == 1) {
+
 			var_dump( wp_get_attachment_metadata( 1734 ) );
-		}
 
 	}
 
