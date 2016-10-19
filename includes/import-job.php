@@ -74,8 +74,8 @@ class WPFPI_CRONJOBS {
 
     	  //wp_schedule_event( time(), 'hourly', 'wpfpi_import_posts' );
 
-            if ( ! function_exists('wp_generate_attachment_metadata' ) {
-                include( ABSPATH . 'wp-admin/includes/image.php' )
+            if ( ! function_exists('wp_generate_attachment_metadata' ) ) {
+                include( ABSPATH . 'wp-admin/includes/image.php' );
             }
 
     	  add_action( 'wpfpi_import_posts',  array( &$this, 'add_import_job' ) );
