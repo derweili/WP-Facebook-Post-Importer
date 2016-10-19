@@ -136,8 +136,8 @@ class WPFPI_IMPORT_TEMPLATES {
 		$new_filename = $attachment['file'];
 		
 		$attach_id = wp_insert_attachment( $postinfo, $new_filename, $this->new_post_id );
-		//$attach_data = wp_generate_attachment_metadata( $attach_id, $new_filename );
-  		//wp_update_attachment_metadata( $attach_id,  $attach_data );
+		$attach_data = wp_generate_attachment_metadata( $attach_id, $new_filename );
+  		wp_update_attachment_metadata( $attach_id,  $attach_data );
 
   		return $attach_id;
 
