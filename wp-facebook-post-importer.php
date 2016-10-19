@@ -48,7 +48,7 @@ class WPFPI_INIT {
 		}
 
 		// load callback function on init hook
-		add_action('init', array( $this, 'callback');
+		add_action('init', array( $this, 'callback') );
 
 	}
 
