@@ -13,7 +13,7 @@ class WPFPI_CRONJOBS {
     private $posts;
     private $attachements;
     private $post_data;
-    public $post_attributes;
+    public  $post_attributes;
     private $posts_request;
     private $posts_response;
     private $total_posts;
@@ -117,7 +117,7 @@ class WPFPI_CRONJOBS {
     					//var_dump($this->insert_post_return );
 
     					add_post_meta( $this->insert_post_return, 'wpfpi_facebook_post_id', $fbpost[ "id" ], true );
-                        var_dump($fbpost[ "created_time" ]->date)
+                        var_dump( $fbpost[ "created_time" ]->format('Y-m-d H:i:s') )
     					/*$timecode = strtotime( $fbpost[ "created_time" ]->date );
     					add_post_meta( $this->insert_post_return, 'wpfpi_time', date( 'Y', $timecode ), true );
 */
