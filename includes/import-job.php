@@ -74,8 +74,9 @@ class WPFPI_CRONJOBS {
 
     public function schedule_import_event () {
 
-    	  //wp_schedule_event( time(), 'hourly', 'wpfpi_import_posts' );
-
+        if (! wp_next_scheduled ( 'wpfpi_import_posts' )) {
+            wp_schedule_event(time(), 'hourly', 'wpfpi_import_posts');
+        }
             if ( ! function_exists('wp_generate_attachment_metadata' ) ) {
                 include( ABSPATH . 'wp-admin/includes/image.php' );
             }
@@ -89,6 +90,8 @@ class WPFPI_CRONJOBS {
     		//echo "before get accounts";
     		$this->get_accounts();
     		//var_dump($this->accounts);
+
+            update_option( 'wpfpi_last_import_run', date('Y-m-d H:i:s') );
 
     		foreach ( $this->accounts as $account ) {
 
@@ -136,7 +139,7 @@ class WPFPI_CRONJOBS {
     			}
     		}
 
-            update_option( 'wpfpi_last_import_run', date('Y-m-d H:i:s') );
+
 
     	}
     }
