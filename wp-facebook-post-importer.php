@@ -49,7 +49,7 @@ class WPFPI_INIT {
 		}*/
 
 		if ( $_GET['attachement'] = 1) {
-			var_dumpt( wp_get_attachment_metadata( 1753 ) );
+			var_dump( wp_get_attachment_metadata( 1753 ) );
 		}
 
 	}
